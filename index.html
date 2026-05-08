@@ -1791,10 +1791,10 @@ html,body{
 /* heart는 우상단 단독 */
 .thumb-heart{ z-index:3; }
 
-/* ==== v4: FAB 위치 보정 ==== */
+/* ==== v4: FAB 위치 — bottom-card 위쪽으로 안전하게 ==== */
 .map-fab-col{
   position:absolute !important; right:14px !important;
-  top:auto !important; bottom:240px !important;
+  top:auto !important; bottom:312px !important; /* card top edge ~298px + 14px gap */
   display:flex; flex-direction:column; gap:10px; z-index:8 !important;
 }
 .map-fab{
@@ -2076,6 +2076,88 @@ html,body{
 /* Sub-page bodies: more bottom padding since no tabbar */
 .frame:not([data-i="0"]):not([data-i="3"]):not([data-i="6"]) > .body{
   padding-bottom:40px;
+}
+
+
+/* ==== v4: CCTV 마커 popup video preview ==== */
+.cctv-preview{
+  width:240px; padding:0; margin:-12px;
+  border-radius:10px; overflow:hidden;
+  background:#191919;
+}
+.cctv-frame{
+  position:relative; width:240px; height:135px;
+  background:linear-gradient(180deg,
+    #6B91B5 0%, #87A8C5 28%,
+    #A8C2D6 50%,
+    #5C8AB8 51%, #3F6F9A 75%, #2C5478 100%);
+  overflow:hidden;
+}
+.cctv-frame::before{
+  /* 수평선 위 옅은 노이즈 */
+  content:''; position:absolute; left:0; right:0; top:0; bottom:0;
+  background:repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 3px);
+  pointer-events:none;
+}
+.cctv-frame::after{
+  /* 좌측 어선 실루엣 */
+  content:''; position:absolute; left:30%; top:48%;
+  width:36px; height:14px;
+  background:rgba(0,0,0,0.55);
+  clip-path:polygon(0% 60%, 8% 100%, 92% 100%, 100% 60%, 80% 0%, 20% 0%);
+}
+.cctv-tag-row{
+  position:absolute; top:8px; left:8px; right:8px;
+  display:flex; justify-content:space-between; align-items:center;
+  z-index:2;
+}
+.cctv-live{
+  display:inline-flex; align-items:center; gap:5px;
+  background:rgba(255,80,80,0.95); color:#fff;
+  padding:3px 7px; border-radius:4px;
+  font:800 9px 'JetBrains Mono', monospace; letter-spacing:0.08em;
+}
+.cctv-live-dot{
+  width:5px; height:5px; border-radius:50%;
+  background:#fff; animation:cctvBlink 1.2s infinite;
+}
+@keyframes cctvBlink { 0%,49%{opacity:1;} 50%,100%{opacity:0.3;} }
+.cctv-cam-name{
+  font:700 9px 'JetBrains Mono', monospace; letter-spacing:0.08em;
+  color:rgba(255,255,255,0.85);
+  background:rgba(0,0,0,0.55); padding:3px 7px; border-radius:4px;
+  backdrop-filter:blur(4px);
+}
+.cctv-bottom-row{
+  position:absolute; bottom:8px; left:8px; right:8px;
+  display:flex; justify-content:space-between; align-items:flex-end;
+  z-index:2;
+}
+.cctv-time{
+  font:700 10.5px 'JetBrains Mono', monospace;
+  color:#fff; text-shadow:0 1px 2px rgba(0,0,0,0.6);
+}
+.cctv-wx{
+  font:700 9px 'JetBrains Mono', monospace; letter-spacing:0.04em;
+  color:rgba(255,255,255,0.85);
+  background:rgba(0,0,0,0.45); padding:3px 6px; border-radius:4px;
+  backdrop-filter:blur(4px);
+}
+.cctv-info{
+  padding:10px 12px; background:#191919; color:#fff;
+}
+.cctv-info-name{
+  font-weight:800; font-size:13px; letter-spacing:-0.02em; line-height:1.2;
+}
+.cctv-info-meta{
+  font:600 10.5px 'JetBrains Mono', monospace; letter-spacing:0.02em;
+  color:rgba(255,255,255,0.6); margin-top:4px;
+}
+.cctv-cta{
+  display:block; width:100%; margin-top:8px;
+  padding:8px; background:#3182F6; color:#fff; border:0;
+  border-radius:6px; font-weight:700; font-size:11.5px;
+  cursor:pointer; letter-spacing:-0.01em;
 }
 </style>
 <style>/* required styles */
@@ -4937,44 +5019,42 @@ function initMap() {
   L.control.attribution({ position: 'bottomleft' }).addTo(map);
 
   const cluster = L.markerClusterGroup({ maxClusterRadius: 40 });
+  window.__mapCluster = cluster;
+  window.__mapMarkers = [];  /* { marker, type, species[] } */
 
-  // ===== v4: 항구 단위 마커 + CCTV/핫스팟/이벤트/기상 =====
+  // ===== v4: 항구 단위 마커 + CCTV/핫스팟/이벤트/기상 (species 필드 포함) =====
   const points = [
     // 서해 (충남)
-    { lat: 36.78, lng: 126.13, type: 'port',  name: '태안 신진항',     subtitle: '4척 운항 · 갈치/광어',    boats: 4, frame: 4 },
-    { lat: 36.41, lng: 126.55, type: 'port',  name: '보령 대천항',     subtitle: '3척 운항 · 광어/주꾸미', boats: 3, frame: 4 },
-    { lat: 37.21, lng: 126.55, type: 'port',  name: '안산 방아머리항', subtitle: '2척 운항 · 우럭',         boats: 2, frame: 4 },
-    { lat: 37.43, lng: 126.39, type: 'port',  name: '인천 연안부두',   subtitle: '5척 운항 · 광어/우럭',    boats: 5, frame: 4 },
+    { lat: 36.78, lng: 126.13, type: 'port',  name: '태안 신진항',     subtitle: '4척 운항 · 갈치/광어',    boats: 4, species:['갈치','광어'],          frame: 4 },
+    { lat: 36.41, lng: 126.55, type: 'port',  name: '보령 대천항',     subtitle: '3척 운항 · 광어/주꾸미', boats: 3, species:['광어','갑오징어'],       frame: 4 },
+    { lat: 37.21, lng: 126.55, type: 'port',  name: '안산 방아머리항', subtitle: '2척 운항 · 우럭',         boats: 2, species:['우럭'],                frame: 4 },
+    { lat: 37.43, lng: 126.39, type: 'port',  name: '인천 연안부두',   subtitle: '5척 운항 · 광어/우럭',    boats: 5, species:['광어','우럭'],          frame: 4 },
     // 남해
-    { lat: 34.74, lng: 127.74, type: 'port',  name: '여수 화정항',     subtitle: '6척 운항 · 갈치 시즌',    boats: 6, frame: 4 },
-    { lat: 34.85, lng: 128.40, type: 'port',  name: '통영 산양읍',     subtitle: '4척 운항 · 갈치/참돔',    boats: 4, frame: 4 },
-    { lat: 34.94, lng: 128.66, type: 'port',  name: '거제 장승포항',   subtitle: '3척 운항 · 참돔/볼락',    boats: 3, frame: 4 },
-    { lat: 34.96, lng: 127.46, type: 'port',  name: '고흥 녹동항',     subtitle: '2척 운항 · 갈치 야간',    boats: 2, frame: 4 },
+    { lat: 34.74, lng: 127.74, type: 'port',  name: '여수 화정항',     subtitle: '6척 운항 · 갈치 시즌',    boats: 6, species:['갈치','참돔'],          frame: 4 },
+    { lat: 34.85, lng: 128.40, type: 'port',  name: '통영 산양읍',     subtitle: '4척 운항 · 갈치/참돔',    boats: 4, species:['갈치','참돔'],          frame: 4 },
+    { lat: 34.94, lng: 128.66, type: 'port',  name: '거제 장승포항',   subtitle: '3척 운항 · 참돔/볼락',    boats: 3, species:['참돔','쏨뱅이'],        frame: 4 },
+    { lat: 34.96, lng: 127.46, type: 'port',  name: '고흥 녹동항',     subtitle: '2척 운항 · 갈치 야간',    boats: 2, species:['갈치'],                frame: 4 },
     // 제주
-    { lat: 33.51, lng: 126.52, type: 'port',  name: '서귀포 위미항',   subtitle: '4척 운항 · 참돔/돌돔',    boats: 4, frame: 4 },
-    { lat: 33.51, lng: 126.50, type: 'port',  name: '서귀포 보목항',   subtitle: '2척 운항 · 자리/한치',    boats: 2, frame: 4 },
+    { lat: 33.51, lng: 126.52, type: 'port',  name: '서귀포 위미항',   subtitle: '4척 운항 · 참돔/돌돔',    boats: 4, species:['참돔'],                frame: 4 },
+    { lat: 33.51, lng: 126.50, type: 'port',  name: '서귀포 보목항',   subtitle: '2척 운항 · 자리/한치',    boats: 2, species:['갑오징어'],            frame: 4 },
     // 동해
-    { lat: 38.20, lng: 128.60, type: 'port',  name: '속초 동명항',     subtitle: '3척 운항 · 광어/도다리',  boats: 3, frame: 4 },
-    { lat: 36.99, lng: 129.41, type: 'port',  name: '울진 후포항',     subtitle: '2척 운항 · 대구/도루묵',  boats: 2, frame: 4 },
-    // CCTV
-    { lat: 36.79, lng: 126.14, type: 'cctv',  name: '태안 신진항 CCTV', subtitle: 'LIVE · 파고 1.2m' },
-    { lat: 34.75, lng: 127.75, type: 'cctv',  name: '여수 화정항 CCTV', subtitle: 'LIVE · 파고 1.8m' },
-    { lat: 33.51, lng: 126.51, type: 'cctv',  name: '서귀포 위미 CCTV', subtitle: 'LIVE · 파고 0.9m' },
-    { lat: 38.20, lng: 128.60, type: 'cctv',  name: '속초 동명항 CCTV', subtitle: 'LIVE · 파고 1.4m' },
-    { lat: 36.41, lng: 126.56, type: 'cctv',  name: '보령 대천항 CCTV', subtitle: 'LIVE · 파고 1.3m' },
-    // 핫스팟
-    { lat: 36.50, lng: 126.30, type: 'spot',  name: '서해 갈치 핫스팟', subtitle: '142건 / 7일 · 9물 진입', frame: 4 },
-    { lat: 34.65, lng: 127.85, type: 'spot',  name: '여수 갈치 핫스팟', subtitle: '89건 / 7일 · 평균 82cm', frame: 4 },
-    { lat: 33.40, lng: 126.65, type: 'spot',  name: '제주 동쪽 참돔존', subtitle: '52건 / 7일 · 시즌 시작', frame: 4 },
-    { lat: 34.90, lng: 128.50, type: 'spot',  name: '통영 갈치 핫스팟', subtitle: '38건 / 7일 · 야간 활성', frame: 4 },
-    { lat: 38.10, lng: 128.55, type: 'spot',  name: '동해 광어 핫스팟', subtitle: '24건 / 7일 · 평균 41cm', frame: 4 },
+    { lat: 38.20, lng: 128.60, type: 'port',  name: '속초 동명항',     subtitle: '3척 운항 · 광어/도다리',  boats: 3, species:['광어'],                frame: 4 },
+    { lat: 36.99, lng: 129.41, type: 'port',  name: '울진 후포항',     subtitle: '2척 운항 · 대구/도루묵',  boats: 2, species:['쏨뱅이'],              frame: 4 },
+    // CCTV (지점에 인접)
+    { lat: 36.79, lng: 126.14, type: 'cctv',  name: '태안 신진항',     subtitle: '파고 1.2m · 풍속 3.4m/s', wx:'파고 1.2m · 풍속 3.4m/s', cam:'CAM-01' },
+    { lat: 34.75, lng: 127.75, type: 'cctv',  name: '여수 화정항',     subtitle: '파고 1.8m · 풍속 4.6m/s', wx:'파고 1.8m · 풍속 4.6m/s', cam:'CAM-02' },
+    { lat: 33.51, lng: 126.51, type: 'cctv',  name: '서귀포 위미',     subtitle: '파고 0.9m · 풍속 2.1m/s', wx:'파고 0.9m · 풍속 2.1m/s', cam:'CAM-03' },
+    { lat: 38.20, lng: 128.60, type: 'cctv',  name: '속초 동명항',     subtitle: '파고 1.4m · 풍속 5.2m/s', wx:'파고 1.4m · 풍속 5.2m/s', cam:'CAM-04' },
+    { lat: 36.41, lng: 126.56, type: 'cctv',  name: '보령 대천항',     subtitle: '파고 1.3m · 풍속 3.8m/s', wx:'파고 1.3m · 풍속 3.8m/s', cam:'CAM-05' },
+    // 핫스팟 (어종 태깅)
+    { lat: 36.50, lng: 126.30, type: 'spot',  name: '서해 갈치 핫스팟', subtitle: '142건 / 7일 · 9물 진입', species:['갈치'],         frame: 4 },
+    { lat: 34.65, lng: 127.85, type: 'spot',  name: '여수 갈치 핫스팟', subtitle: '89건 / 7일 · 평균 82cm', species:['갈치'],         frame: 4 },
+    { lat: 33.40, lng: 126.65, type: 'spot',  name: '제주 동쪽 참돔존', subtitle: '52건 / 7일 · 시즌 시작', species:['참돔'],         frame: 4 },
+    { lat: 34.90, lng: 128.50, type: 'spot',  name: '통영 갈치 핫스팟', subtitle: '38건 / 7일 · 야간 활성', species:['갈치'],         frame: 4 },
+    { lat: 38.10, lng: 128.55, type: 'spot',  name: '동해 광어 핫스팟', subtitle: '24건 / 7일 · 평균 41cm', species:['광어'],         frame: 4 },
     // 이벤트 / 챔피언십
-    { lat: 36.40, lng: 126.55, type: 'event', name: '챔피언십 1차전',   subtitle: '5.20 · 광어 다운샷 · 보령',  frame: 6 },
-    { lat: 34.74, lng: 127.74, type: 'event', name: '여수 갈치 페스타',  subtitle: '5.25-26 · 화정항 일대',     frame: 6 },
-    // 기상 부이
-    { lat: 35.50, lng: 126.10, type: 'wx',    name: '서해남부 부이',    subtitle: '풍속 4.6m/s · 파고 1.2m' },
-    { lat: 35.20, lng: 128.50, type: 'wx',    name: '남해동부 부이',    subtitle: '풍속 3.1m/s · 파고 0.9m' },
-    { lat: 37.50, lng: 130.80, type: 'wx',    name: '울릉도 부이',      subtitle: '풍속 6.8m/s · 파고 1.6m' }
+    { lat: 36.40, lng: 126.55, type: 'event', name: '챔피언십 1차전',   subtitle: '5.20 · 광어 다운샷 · 보령',  species:['광어'], frame: 6 },
+    { lat: 34.74, lng: 127.74, type: 'event', name: '여수 갈치 페스타',  subtitle: '5.25-26 · 화정항 일대',     species:['갈치'], frame: 6 }
   ];
 
   const iconSpec = {
@@ -4985,6 +5065,41 @@ function initMap() {
     event: { color: '#6433DF', label: '!' },
     wx:    { color: '#0AD2FF', label: 'W' }
   };
+
+  function buildPopupHtml(p) {
+    if (p.type === 'cctv') {
+      const now = new Date();
+      const t = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
+      return [
+        '<div class="cctv-preview">',
+          '<div class="cctv-frame">',
+            '<div class="cctv-tag-row">',
+              '<span class="cctv-live"><span class="cctv-live-dot"></span>LIVE</span>',
+              '<span class="cctv-cam-name">' + (p.cam || 'CAM-00') + '</span>',
+            '</div>',
+            '<div class="cctv-bottom-row">',
+              '<span class="cctv-time">' + t + '</span>',
+              '<span class="cctv-wx">' + (p.wx || '—') + '</span>',
+            '</div>',
+          '</div>',
+          '<div class="cctv-info">',
+            '<div class="cctv-info-name">' + p.name + ' CCTV</div>',
+            '<div class="cctv-info-meta">실시간 · ' + (p.wx || '') + '</div>',
+            '<button class="cctv-cta" onclick="navTo(4)">항구 정보 보기 →</button>',
+          '</div>',
+        '</div>'
+      ].join('');
+    }
+    let html = '<div class="map-popup">';
+    html += '<div class="map-popup-name">' + p.name + '</div>';
+    html += '<div class="map-popup-sub">' + p.subtitle + '</div>';
+    if (p.frame) {
+      const ctaText = p.type === 'port' ? '항구 선박 보기 →' : (p.type === 'event' ? '이벤트 보기 →' : '자세히 보기 →');
+      html += '<button class="map-popup-cta" onclick="navTo(' + p.frame + ')">' + ctaText + '</button>';
+    }
+    html += '</div>';
+    return html;
+  }
 
   points.forEach(p => {
     const spec = iconSpec[p.type] || iconSpec.port;
@@ -5009,19 +5124,65 @@ function initMap() {
       iconSize: [sz, sz], iconAnchor: [sz/2, sz/2]
     });
     const marker = L.marker([p.lat, p.lng], { icon: ico });
-    let popupHtml = '<div class="map-popup">';
-    popupHtml += '<div class="map-popup-name">' + p.name + '</div>';
-    popupHtml += '<div class="map-popup-sub">' + p.subtitle + '</div>';
-    if (p.frame) {
-      const ctaText = p.type === 'port' ? '항구 선박 보기 →' : (p.type === 'event' ? '이벤트 보기 →' : '자세히 보기 →');
-      popupHtml += '<button class="map-popup-cta" onclick="navTo(' + p.frame + ')">' + ctaText + '</button>';
-    }
-    popupHtml += '</div>';
-    marker.bindPopup(popupHtml);
-    cluster.addLayer(marker);
+    marker.bindPopup(buildPopupHtml(p), { maxWidth: 260, minWidth: 240 });
+    window.__mapMarkers.push({ marker, type: p.type, species: p.species || [] });
   });
 
+  // 초기 활성 레이어 / 어종
+  window.__mapActiveLayers = new Set(['port','cctv','spot','event']);
+  window.__mapActiveSpecies = new Set(['갈치']);
+
+  function applyMapFilters() {
+    if (!window.__mapCluster) return;
+    window.__mapCluster.clearLayers();
+    window.__mapMarkers.forEach(m => {
+      if (!window.__mapActiveLayers.has(m.type)) return;
+      // 어종 필터: species 데이터를 가진 마커만 적용 (cctv·wx는 어종과 무관)
+      if (m.species.length > 0 && window.__mapActiveSpecies.size > 0) {
+        let hit = false;
+        m.species.forEach(s => { if (window.__mapActiveSpecies.has(s)) hit = true; });
+        if (!hit) return;
+      }
+      window.__mapCluster.addLayer(m.marker);
+    });
+  }
+  window.applyMapFilters = applyMapFilters;
+  applyMapFilters();
   map.addLayer(cluster);
+
+  // ===== 레이어 칩 wiring =====
+  const LAYER_KEY = { '항구':'port', 'CCTV':'cctv', '핫스팟':'spot', '이벤트':'event', '기상':'wx' };
+  document.querySelectorAll('.map-layer').forEach(chip => {
+    if (chip.__wiredLayer) return; chip.__wiredLayer = true;
+    chip.addEventListener('click', e => {
+      e.stopPropagation();
+      const txt = chip.textContent.trim();
+      const key = LAYER_KEY[txt];
+      if (!key) return;
+      if (window.__mapActiveLayers.has(key)) {
+        window.__mapActiveLayers.delete(key);
+        chip.classList.remove('on');
+      } else {
+        window.__mapActiveLayers.add(key);
+        chip.classList.add('on');
+      }
+      applyMapFilters();
+    });
+  });
+
+  // ===== 어종 칩 wiring (단일 선택) =====
+  document.querySelectorAll('.species-chip').forEach(chip => {
+    if (chip.__wiredSp) return; chip.__wiredSp = true;
+    chip.addEventListener('click', e => {
+      e.stopPropagation();
+      const sp = chip.textContent.trim();
+      document.querySelectorAll('.species-chip').forEach(c => c.classList.remove('on'));
+      chip.classList.add('on');
+      window.__mapActiveSpecies.clear();
+      window.__mapActiveSpecies.add(sp);
+      applyMapFilters();
+    });
+  });
 }
 
 window.navTo = function(i) { showFrame(i); };
