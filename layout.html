@@ -1461,14 +1461,7 @@ html,body{
   display:flex; align-items:center; justify-content:center;
 }
 .thumb-heart svg{width:16px; height:16px;}
-.thumb-fit{
-  position:absolute; bottom:10px; left:10px;
-  font:800 10.5px var(--mono); letter-spacing:0.06em;
-  padding:5px 10px; border-radius:9999px;
-  background:rgba(0,0,0,0.78); color:#fff; backdrop-filter:blur(6px);
-}
-.thumb-fit.A{background:rgba(16,185,129,0.92);}
-.thumb-fit.B{background:rgba(255,184,0,0.92); color:var(--ink-1);}
+.thumb-fit{ display:none !important; }
 .boat-result-info{display:flex; flex-direction:column; gap:6px;}
 .boat-result-row1{display:flex; align-items:baseline; justify-content:space-between; gap:8px;}
 .boat-result-name{font-weight:800; font-size:18px; color:var(--ink-1); letter-spacing:-0.04em;}
@@ -1494,7 +1487,7 @@ html,body{
 
 
 /* ===== Detail-page polish ===== */
-.detail-body{padding-bottom:120px;}
+.detail-body{padding-bottom:140px;}
 .detail-pad{padding:0 20px;}
 .boat-cover{height:320px; background:linear-gradient(135deg,#A4C8E1 0%,#3F6F9A 100%); position:relative;}
 .boat-cover-back{box-shadow:0 4px 12px rgba(0,0,0,0.10);}
@@ -1710,13 +1703,15 @@ html,body{
 
 /* ===== Frame 7 — detail sticky condensed header ===== */
 .detail-sticky-h{
-  position:sticky; top:0; z-index:20;
+  position:sticky; top:0; z-index:30;
   display:flex; align-items:center; gap:10px;
-  background:rgba(255,255,255,0.96); backdrop-filter:blur(12px) saturate(1.2);
-  -webkit-backdrop-filter:blur(12px) saturate(1.2);
+  background:#fff; /* fully opaque — no bleed-through */
   padding:10px 14px; border-bottom:1px solid var(--line);
-  height:52px;
+  height:56px; box-sizing:border-box;
+  margin:0; /* ensure no gap above */
 }
+/* outer sticky-h must sit flush at top of body (no offset above) */
+.detail-body > .detail-sticky-h:first-child{ top:0; margin-top:0; }
 .detail-sticky-back{
   width:36px; height:36px; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
@@ -1741,7 +1736,7 @@ html,body{
 .detail-body .boat-cover{margin-top:0;}
 
 /* detail-tabs sit at top:52px (height of sticky header) */
-.detail-pad .detail-tabs{top:52px !important;}
+.detail-pad .detail-tabs{top:56px !important;}
 
 
 /* Section anchors for tab scroll (offset = sticky header 52 + tabs 48 = 100px) */
@@ -2931,7 +2926,7 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh; font-family
 .phone-wrap #leafletMap { background:linear-gradient(135deg,#E8F0FF 0%,#D8E5F8 100%) !important; position:relative; }
 .phone-wrap #leafletMap::after { content:'지도 — Leaflet (인터랙티브)'; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:#5688A8; font-weight:700; font-size:11px; letter-spacing:-0.01em; pointer-events:none; }
 </style></head><body>
-<div class="layout-h"><div><h1>어바웃피싱 — 전체 18 프레임</h1><div class="sub">3탭 · v4 design</div></div><a href="./" class="back-btn">← 프로토타입으로</a></div>
+<div class="layout-h"><div><h1>어바웃피싱 — 전체 18 프레임</h1><div class="sub">3탭 · v4 design (renewal)</div></div><a href="./" class="back-btn">← 프로토타입으로</a></div>
 <div class="grid"><div class="cell"><div class="cell-h"><span class="num">01</span><span class="name">새로운 소식 · 메인 라벨</span></div><div class="phone-wrap"><div class="frame active" data-i="0">
         <div class="h">
           <div class="h-l"><div class="h-logo"><svg viewBox="0 0 144.3 36.8" width="100" height="26"><path fill="#2d1478" d="M23.9,21.1v-8.5h-8.4v-3.9h8.4V0h4.1v21.1h-4.1ZM6,20.4c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM6,12.6c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-.9,2-2-.9-2-2-2ZM52.6,21.1V0h4.1v8.7h7v3.9h-7v8.5h-4.1ZM32.5,21.1V4.3h4v5.5h5.6v-5.5h4v16.8s-13.6,0-13.6,0ZM42.1,17.2v-3.4h-5.6v3.4h5.6ZM71.7,36.8l5-4.6,5.1,4.6,2.7-2.9-5.7-5.2v-7.5h9v-3.9h-22.2v3.9h9.1v7.5l-5.7,5.1s2.7,3,2.7,3ZM76.7,13.1c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM76.7,5.3c-1,0-1.9.9-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM110.9,21.1V0h4.1v21.1h-4.1ZM89.7,21.1v-3.9h2.5v-4.6h-2.5v-3.9h16.8v3.9h-2.4v4.6h2.4v3.9h-16.8ZM100,17.2v-4.6h-3.8v4.6h3.8ZM138.2,36.7c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM138.2,28.9c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM140.2,21.1V0h4.1v21.1h-4.1ZM118.4,18l5.7-5.1v-5.8h4.1v5.8l5.7,5.2-2.7,3-5.1-4.6-5,4.6-2.7-3h0Z"></path></svg></div></div>

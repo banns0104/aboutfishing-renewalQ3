@@ -1463,14 +1463,7 @@ html,body{
   display:flex; align-items:center; justify-content:center;
 }
 .thumb-heart svg{width:16px; height:16px;}
-.thumb-fit{
-  position:absolute; bottom:10px; left:10px;
-  font:800 10.5px var(--mono); letter-spacing:0.06em;
-  padding:5px 10px; border-radius:9999px;
-  background:rgba(0,0,0,0.78); color:#fff; backdrop-filter:blur(6px);
-}
-.thumb-fit.A{background:rgba(16,185,129,0.92);}
-.thumb-fit.B{background:rgba(255,184,0,0.92); color:var(--ink-1);}
+.thumb-fit{ display:none !important; }
 .boat-result-info{display:flex; flex-direction:column; gap:6px;}
 .boat-result-row1{display:flex; align-items:baseline; justify-content:space-between; gap:8px;}
 .boat-result-name{font-weight:800; font-size:18px; color:var(--ink-1); letter-spacing:-0.04em;}
@@ -1496,7 +1489,7 @@ html,body{
 
 
 /* ===== Detail-page polish ===== */
-.detail-body{padding-bottom:120px;}
+.detail-body{padding-bottom:140px;}
 .detail-pad{padding:0 20px;}
 .boat-cover{height:320px; background:linear-gradient(135deg,#A4C8E1 0%,#3F6F9A 100%); position:relative;}
 .boat-cover-back{box-shadow:0 4px 12px rgba(0,0,0,0.10);}
@@ -1712,13 +1705,15 @@ html,body{
 
 /* ===== Frame 7 — detail sticky condensed header ===== */
 .detail-sticky-h{
-  position:sticky; top:0; z-index:20;
+  position:sticky; top:0; z-index:30;
   display:flex; align-items:center; gap:10px;
-  background:rgba(255,255,255,0.96); backdrop-filter:blur(12px) saturate(1.2);
-  -webkit-backdrop-filter:blur(12px) saturate(1.2);
+  background:#fff; /* fully opaque — no bleed-through */
   padding:10px 14px; border-bottom:1px solid var(--line);
-  height:52px;
+  height:56px; box-sizing:border-box;
+  margin:0; /* ensure no gap above */
 }
+/* outer sticky-h must sit flush at top of body (no offset above) */
+.detail-body > .detail-sticky-h:first-child{ top:0; margin-top:0; }
 .detail-sticky-back{
   width:36px; height:36px; border-radius:50%;
   display:flex; align-items:center; justify-content:center;
@@ -1743,7 +1738,7 @@ html,body{
 .detail-body .boat-cover{margin-top:0;}
 
 /* detail-tabs sit at top:52px (height of sticky header) */
-.detail-pad .detail-tabs{top:52px !important;}
+.detail-pad .detail-tabs{top:56px !important;}
 
 
 /* Section anchors for tab scroll (offset = sticky header 52 + tabs 48 = 100px) */
@@ -5049,38 +5044,110 @@ function initMap() {
 
   // ===== v4: 항구 단위 마커 + CCTV/핫스팟/이벤트/기상 (species 필드 포함) =====
   const points = [
-    // 서해 (충남)
-    { lat: 36.78, lng: 126.13, type: 'port',  name: '태안 신진항',     subtitle: '4척 운항 · 갈치/광어',    boats: 4, species:['갈치','광어'],          frame: 4 },
-    { lat: 36.41, lng: 126.55, type: 'port',  name: '보령 대천항',     subtitle: '3척 운항 · 광어/주꾸미', boats: 3, species:['광어','갑오징어'],       frame: 4 },
-    { lat: 37.21, lng: 126.55, type: 'port',  name: '안산 방아머리항', subtitle: '2척 운항 · 우럭',         boats: 2, species:['우럭'],                frame: 4 },
-    { lat: 37.43, lng: 126.39, type: 'port',  name: '인천 연안부두',   subtitle: '5척 운항 · 광어/우럭',    boats: 5, species:['광어','우럭'],          frame: 4 },
-    // 남해
-    { lat: 34.74, lng: 127.74, type: 'port',  name: '여수 화정항',     subtitle: '6척 운항 · 갈치 시즌',    boats: 6, species:['갈치','참돔'],          frame: 4 },
-    { lat: 34.85, lng: 128.40, type: 'port',  name: '통영 산양읍',     subtitle: '4척 운항 · 갈치/참돔',    boats: 4, species:['갈치','참돔'],          frame: 4 },
-    { lat: 34.94, lng: 128.66, type: 'port',  name: '거제 장승포항',   subtitle: '3척 운항 · 참돔/볼락',    boats: 3, species:['참돔','쏨뱅이'],        frame: 4 },
-    { lat: 34.96, lng: 127.46, type: 'port',  name: '고흥 녹동항',     subtitle: '2척 운항 · 갈치 야간',    boats: 2, species:['갈치'],                frame: 4 },
-    // 제주
-    { lat: 33.51, lng: 126.52, type: 'port',  name: '서귀포 위미항',   subtitle: '4척 운항 · 참돔/돌돔',    boats: 4, species:['참돔'],                frame: 4 },
-    { lat: 33.51, lng: 126.50, type: 'port',  name: '서귀포 보목항',   subtitle: '2척 운항 · 자리/한치',    boats: 2, species:['갑오징어'],            frame: 4 },
-    // 동해
-    { lat: 38.20, lng: 128.60, type: 'port',  name: '속초 동명항',     subtitle: '3척 운항 · 광어/도다리',  boats: 3, species:['광어'],                frame: 4 },
-    { lat: 36.99, lng: 129.41, type: 'port',  name: '울진 후포항',     subtitle: '2척 운항 · 대구/도루묵',  boats: 2, species:['쏨뱅이'],              frame: 4 },
-    // CCTV (지점에 인접)
-    { lat: 36.79, lng: 126.14, type: 'cctv',  name: '태안 신진항',     subtitle: '파고 1.2m · 풍속 3.4m/s', wx:'파고 1.2m · 풍속 3.4m/s', cam:'CAM-01' },
-    { lat: 34.75, lng: 127.75, type: 'cctv',  name: '여수 화정항',     subtitle: '파고 1.8m · 풍속 4.6m/s', wx:'파고 1.8m · 풍속 4.6m/s', cam:'CAM-02' },
-    { lat: 33.51, lng: 126.51, type: 'cctv',  name: '서귀포 위미',     subtitle: '파고 0.9m · 풍속 2.1m/s', wx:'파고 0.9m · 풍속 2.1m/s', cam:'CAM-03' },
-    { lat: 38.20, lng: 128.60, type: 'cctv',  name: '속초 동명항',     subtitle: '파고 1.4m · 풍속 5.2m/s', wx:'파고 1.4m · 풍속 5.2m/s', cam:'CAM-04' },
-    { lat: 36.41, lng: 126.56, type: 'cctv',  name: '보령 대천항',     subtitle: '파고 1.3m · 풍속 3.8m/s', wx:'파고 1.3m · 풍속 3.8m/s', cam:'CAM-05' },
-    // 핫스팟 (어종 태깅)
-    { lat: 36.50, lng: 126.30, type: 'spot',  name: '서해 갈치 핫스팟', subtitle: '142건 / 7일 · 9물 진입', species:['갈치'],         frame: 4 },
-    { lat: 34.65, lng: 127.85, type: 'spot',  name: '여수 갈치 핫스팟', subtitle: '89건 / 7일 · 평균 82cm', species:['갈치'],         frame: 4 },
-    { lat: 33.40, lng: 126.65, type: 'spot',  name: '제주 동쪽 참돔존', subtitle: '52건 / 7일 · 시즌 시작', species:['참돔'],         frame: 4 },
-    { lat: 34.90, lng: 128.50, type: 'spot',  name: '통영 갈치 핫스팟', subtitle: '38건 / 7일 · 야간 활성', species:['갈치'],         frame: 4 },
-    { lat: 38.10, lng: 128.55, type: 'spot',  name: '동해 광어 핫스팟', subtitle: '24건 / 7일 · 평균 41cm', species:['광어'],         frame: 4 },
-    // 이벤트 / 챔피언십
-    { lat: 36.40, lng: 126.55, type: 'event', name: '챔피언십 1차전',   subtitle: '5.20 · 광어 다운샷 · 보령',  species:['광어'], frame: 6 },
-    { lat: 34.74, lng: 127.74, type: 'event', name: '여수 갈치 페스타',  subtitle: '5.25-26 · 화정항 일대',     species:['갈치'], frame: 6 }
-  ];
+    // ============ 서해 (Yellow Sea) ============
+    // 인천·경기
+    { lat: 37.733, lng: 124.696, type: 'port', name: '연평도 당섬',     subtitle: '2척 운항 · 꽃게/우럭',    boats: 2, species:['우럭'],          frame: 4 },
+    { lat: 37.487, lng: 126.508, type: 'port', name: '인천 영종 잠진',  subtitle: '3척 운항 · 우럭/광어',    boats: 3, species:['우럭','광어'],  frame: 4 },
+    { lat: 37.43,  lng: 126.39,  type: 'port', name: '인천 연안부두',   subtitle: '5척 운항 · 광어/우럭',    boats: 5, species:['광어','우럭'],  frame: 4 },
+    { lat: 37.21,  lng: 126.55,  type: 'port', name: '안산 방아머리항', subtitle: '2척 운항 · 우럭',         boats: 2, species:['우럭'],          frame: 4 },
+    { lat: 37.001, lng: 126.700, type: 'port', name: '평택 평택항',     subtitle: '2척 운항 · 광어',         boats: 2, species:['광어'],          frame: 4 },
+    // 충남
+    { lat: 37.041, lng: 126.483, type: 'port', name: '당진 왜목항',     subtitle: '3척 운항 · 갈치/광어',    boats: 3, species:['갈치','광어'],  frame: 4 },
+    { lat: 36.78,  lng: 126.13,  type: 'port', name: '태안 신진항',     subtitle: '4척 운항 · 갈치/광어',    boats: 4, species:['갈치','광어'],  frame: 4 },
+    { lat: 36.677, lng: 126.131, type: 'port', name: '태안 안흥항',     subtitle: '5척 운항 · 갈치 시즌',    boats: 5, species:['갈치','참돔'],  frame: 4 },
+    { lat: 36.51,  lng: 126.348, type: 'port', name: '보령 오천항',     subtitle: '3척 운항 · 광어/우럭',    boats: 3, species:['광어','우럭'],  frame: 4 },
+    { lat: 36.41,  lng: 126.55,  type: 'port', name: '보령 대천항',     subtitle: '3척 운항 · 광어/주꾸미',  boats: 3, species:['광어','갑오징어'], frame: 4 },
+    { lat: 36.347, lng: 126.526, type: 'port', name: '서천 마량항',     subtitle: '2척 운항 · 갑오징어',     boats: 2, species:['갑오징어'],     frame: 4 },
+    // 전북
+    { lat: 35.918, lng: 126.643, type: 'port', name: '군산 비응항',     subtitle: '4척 운항 · 갑오징어/광어', boats: 4, species:['갑오징어','광어'], frame: 4 },
+    { lat: 35.633, lng: 126.467, type: 'port', name: '부안 격포항',     subtitle: '3척 운항 · 광어/갑오징어', boats: 3, species:['광어','갑오징어'], frame: 4 },
+    // 전남
+    { lat: 35.410, lng: 126.341, type: 'port', name: '영광 법성포',     subtitle: '2척 운항 · 갈치',         boats: 2, species:['갈치'],          frame: 4 },
+    { lat: 34.943, lng: 126.401, type: 'port', name: '무안 톱머리',     subtitle: '2척 운항 · 광어',         boats: 2, species:['광어'],          frame: 4 },
+    { lat: 34.470, lng: 126.140, type: 'port', name: '진도 서망항',     subtitle: '3척 운항 · 참돔/돌돔',    boats: 3, species:['참돔','쏨뱅이'], frame: 4 },
+    { lat: 34.685, lng: 125.435, type: 'port', name: '신안 흑산도',     subtitle: '2척 운항 · 참돔',         boats: 2, species:['참돔'],          frame: 4 },
+    // ============ 남해 (South Sea) ============
+    { lat: 34.555, lng: 126.293, type: 'port', name: '해남 우수영',     subtitle: '2척 운항 · 참돔/감성돔',  boats: 2, species:['참돔'],          frame: 4 },
+    { lat: 34.297, lng: 126.745, type: 'port', name: '완도 화흥포',     subtitle: '3척 운항 · 참돔/돌돔',    boats: 3, species:['참돔','쏨뱅이'], frame: 4 },
+    { lat: 34.96,  lng: 127.46,  type: 'port', name: '고흥 녹동항',     subtitle: '4척 운항 · 갈치 야간',    boats: 4, species:['갈치'],          frame: 4 },
+    { lat: 34.74,  lng: 127.74,  type: 'port', name: '여수 화정항',     subtitle: '6척 운항 · 갈치 시즌',    boats: 6, species:['갈치','참돔'],  frame: 4 },
+    { lat: 34.024, lng: 127.305, type: 'port', name: '여수 거문도',     subtitle: '2척 운항 · 참돔/돌돔',    boats: 2, species:['참돔'],          frame: 4 },
+    { lat: 34.939, lng: 127.696, type: 'port', name: '광양 광양항',     subtitle: '2척 운항 · 우럭/볼락',    boats: 2, species:['우럭','쏨뱅이'], frame: 4 },
+    { lat: 34.724, lng: 127.985, type: 'port', name: '남해 미조항',     subtitle: '4척 운항 · 갈치/볼락',    boats: 4, species:['갈치','쏨뱅이'], frame: 4 },
+    { lat: 34.708, lng: 128.064, type: 'port', name: '남해 상주항',     subtitle: '3척 운항 · 참돔',         boats: 3, species:['참돔'],          frame: 4 },
+    { lat: 34.85,  lng: 128.40,  type: 'port', name: '통영 산양읍',     subtitle: '4척 운항 · 갈치/참돔',    boats: 4, species:['갈치','참돔'],  frame: 4 },
+    { lat: 34.594, lng: 128.272, type: 'port', name: '통영 욕지도',     subtitle: '3척 운항 · 참돔/돌돔',    boats: 3, species:['참돔','쏨뱅이'], frame: 4 },
+    { lat: 34.94,  lng: 128.66,  type: 'port', name: '거제 장승포항',   subtitle: '4척 운항 · 참돔/볼락',    boats: 4, species:['참돔','쏨뱅이'], frame: 4 },
+    { lat: 34.745, lng: 128.524, type: 'port', name: '거제 해금강',     subtitle: '2척 운항 · 돌돔',         boats: 2, species:['쏨뱅이'],        frame: 4 },
+    { lat: 35.083, lng: 129.080, type: 'port', name: '부산 다대포',     subtitle: '3척 운항 · 우럭/광어',    boats: 3, species:['우럭','광어'],  frame: 4 },
+    { lat: 35.241, lng: 129.225, type: 'port', name: '부산 기장 대변항', subtitle: '5척 운항 · 갈치/우럭',    boats: 5, species:['갈치','우럭'],  frame: 4 },
+    { lat: 35.522, lng: 129.434, type: 'port', name: '울산 방어진',     subtitle: '3척 운항 · 갈치/우럭',    boats: 3, species:['갈치','우럭'],  frame: 4 },
+    // ============ 동해 (East Sea) ============
+    { lat: 35.658, lng: 129.480, type: 'port', name: '울산 정자항',     subtitle: '3척 운항 · 광어/우럭',    boats: 3, species:['광어','우럭'],  frame: 4 },
+    { lat: 36.075, lng: 129.566, type: 'port', name: '포항 호미곶',     subtitle: '4척 운항 · 광어/우럭',    boats: 4, species:['광어','우럭'],  frame: 4 },
+    { lat: 36.348, lng: 129.395, type: 'port', name: '영덕 강구항',     subtitle: '3척 운항 · 대구/광어',    boats: 3, species:['광어','쏨뱅이'], frame: 4 },
+    { lat: 36.510, lng: 129.448, type: 'port', name: '영덕 축산항',     subtitle: '2척 운항 · 광어/볼락',    boats: 2, species:['광어','쏨뱅이'], frame: 4 },
+    { lat: 36.99,  lng: 129.41,  type: 'port', name: '울진 후포항',     subtitle: '4척 운항 · 대구/도루묵',  boats: 4, species:['쏨뱅이','광어'], frame: 4 },
+    { lat: 37.193, lng: 129.348, type: 'port', name: '삼척 임원항',     subtitle: '3척 운항 · 광어/볼락',    boats: 3, species:['광어','쏨뱅이'], frame: 4 },
+    { lat: 37.504, lng: 129.116, type: 'port', name: '동해 어달항',     subtitle: '2척 운항 · 도다리/광어',  boats: 2, species:['광어'],          frame: 4 },
+    { lat: 37.890, lng: 128.829, type: 'port', name: '강릉 주문진',     subtitle: '4척 운항 · 광어/도다리',  boats: 4, species:['광어'],          frame: 4 },
+    { lat: 38.065, lng: 128.733, type: 'port', name: '양양 남애항',     subtitle: '2척 운항 · 광어',         boats: 2, species:['광어'],          frame: 4 },
+    { lat: 38.20,  lng: 128.60,  type: 'port', name: '속초 동명항',     subtitle: '4척 운항 · 광어/도다리',  boats: 4, species:['광어'],          frame: 4 },
+    { lat: 38.426, lng: 128.453, type: 'port', name: '고성 거진항',     subtitle: '2척 운항 · 광어/대구',    boats: 2, species:['광어'],          frame: 4 },
+    // ============ 제주 ============
+    { lat: 33.51,  lng: 126.52,  type: 'port', name: '서귀포 위미항',   subtitle: '4척 운항 · 참돔/돌돔',    boats: 4, species:['참돔'],          frame: 4 },
+    { lat: 33.51,  lng: 126.50,  type: 'port', name: '서귀포 보목항',   subtitle: '2척 운항 · 자리/한치',    boats: 2, species:['갑오징어'],      frame: 4 },
+    { lat: 33.219, lng: 126.252, type: 'port', name: '서귀포 모슬포',   subtitle: '5척 운항 · 갈치/방어',    boats: 5, species:['갈치','참돔'],  frame: 4 },
+    { lat: 33.554, lng: 126.751, type: 'port', name: '제주 김녕항',     subtitle: '3척 운항 · 참돔/우럭',    boats: 3, species:['참돔','우럭'],  frame: 4 },
+    { lat: 33.412, lng: 126.265, type: 'port', name: '제주 한림항',     subtitle: '3척 운항 · 갈치/참돔',    boats: 3, species:['갈치','참돔'],  frame: 4 },
+    { lat: 33.961, lng: 126.300, type: 'port', name: '제주 추자도',     subtitle: '2척 운항 · 참돔/돌돔',    boats: 2, species:['참돔','쏨뱅이'], frame: 4 },
+
+    // ============ CCTV (실시간 라이브) ============
+    { lat: 37.487, lng: 126.512, type: 'cctv', name: '인천 영종 잠진',  subtitle: '파고 1.0m · 풍속 3.2m/s', wx:'파고 1.0m · 풍속 3.2m/s', cam:'CAM-01' },
+    { lat: 37.211, lng: 126.553, type: 'cctv', name: '안산 방아머리',   subtitle: '파고 1.1m · 풍속 3.6m/s', wx:'파고 1.1m · 풍속 3.6m/s', cam:'CAM-02' },
+    { lat: 36.79,  lng: 126.14,  type: 'cctv', name: '태안 신진항',     subtitle: '파고 1.2m · 풍속 3.4m/s', wx:'파고 1.2m · 풍속 3.4m/s', cam:'CAM-03' },
+    { lat: 36.41,  lng: 126.56,  type: 'cctv', name: '보령 대천항',     subtitle: '파고 1.3m · 풍속 3.8m/s', wx:'파고 1.3m · 풍속 3.8m/s', cam:'CAM-04' },
+    { lat: 35.918, lng: 126.645, type: 'cctv', name: '군산 비응항',     subtitle: '파고 1.5m · 풍속 4.2m/s', wx:'파고 1.5m · 풍속 4.2m/s', cam:'CAM-05' },
+    { lat: 35.633, lng: 126.467, type: 'cctv', name: '부안 격포항',     subtitle: '파고 1.4m · 풍속 4.0m/s', wx:'파고 1.4m · 풍속 4.0m/s', cam:'CAM-06' },
+    { lat: 34.297, lng: 126.745, type: 'cctv', name: '완도 화흥포',     subtitle: '파고 1.6m · 풍속 4.5m/s', wx:'파고 1.6m · 풍속 4.5m/s', cam:'CAM-07' },
+    { lat: 34.96,  lng: 127.46,  type: 'cctv', name: '고흥 녹동항',     subtitle: '파고 1.7m · 풍속 4.8m/s', wx:'파고 1.7m · 풍속 4.8m/s', cam:'CAM-08' },
+    { lat: 34.75,  lng: 127.75,  type: 'cctv', name: '여수 화정항',     subtitle: '파고 1.8m · 풍속 4.6m/s', wx:'파고 1.8m · 풍속 4.6m/s', cam:'CAM-09' },
+    { lat: 34.85,  lng: 128.40,  type: 'cctv', name: '통영 산양읍',     subtitle: '파고 1.6m · 풍속 4.1m/s', wx:'파고 1.6m · 풍속 4.1m/s', cam:'CAM-10' },
+    { lat: 34.94,  lng: 128.66,  type: 'cctv', name: '거제 장승포',     subtitle: '파고 1.5m · 풍속 3.9m/s', wx:'파고 1.5m · 풍속 3.9m/s', cam:'CAM-11' },
+    { lat: 35.241, lng: 129.225, type: 'cctv', name: '부산 기장 대변',  subtitle: '파고 1.4m · 풍속 4.3m/s', wx:'파고 1.4m · 풍속 4.3m/s', cam:'CAM-12' },
+    { lat: 36.075, lng: 129.566, type: 'cctv', name: '포항 호미곶',     subtitle: '파고 1.3m · 풍속 5.0m/s', wx:'파고 1.3m · 풍속 5.0m/s', cam:'CAM-13' },
+    { lat: 36.99,  lng: 129.41,  type: 'cctv', name: '울진 후포항',     subtitle: '파고 1.5m · 풍속 5.5m/s', wx:'파고 1.5m · 풍속 5.5m/s', cam:'CAM-14' },
+    { lat: 37.890, lng: 128.829, type: 'cctv', name: '강릉 주문진',     subtitle: '파고 1.4m · 풍속 5.2m/s', wx:'파고 1.4m · 풍속 5.2m/s', cam:'CAM-15' },
+    { lat: 38.20,  lng: 128.60,  type: 'cctv', name: '속초 동명항',     subtitle: '파고 1.4m · 풍속 5.2m/s', wx:'파고 1.4m · 풍속 5.2m/s', cam:'CAM-16' },
+    { lat: 33.51,  lng: 126.51,  type: 'cctv', name: '서귀포 위미',     subtitle: '파고 0.9m · 풍속 2.1m/s', wx:'파고 0.9m · 풍속 2.1m/s', cam:'CAM-17' },
+    { lat: 33.219, lng: 126.255, type: 'cctv', name: '서귀포 모슬포',   subtitle: '파고 1.1m · 풍속 2.8m/s', wx:'파고 1.1m · 풍속 2.8m/s', cam:'CAM-18' },
+
+    // ============ 핫스팟 (어종별 집중 발생 좌표) ============
+    { lat: 37.50,  lng: 124.90,  type: 'spot', name: '연평도 우럭존',   subtitle: '64건/7일 · 시즌 진입',     species:['우럭'],         frame: 4 },
+    { lat: 37.30,  lng: 126.30,  type: 'spot', name: '경기만 광어 베이', subtitle: '38건/7일 · 평균 39cm',    species:['광어'],         frame: 4 },
+    { lat: 36.50,  lng: 126.30,  type: 'spot', name: '서해 갈치 핫스팟', subtitle: '142건/7일 · 9물 진입',     species:['갈치'],         frame: 4 },
+    { lat: 36.20,  lng: 126.40,  type: 'spot', name: '서천 갑오징어',   subtitle: '76건/7일 · 야간 활성',     species:['갑오징어'],     frame: 4 },
+    { lat: 35.80,  lng: 126.50,  type: 'spot', name: '군산 광어 베이',  subtitle: '52건/7일 · 평균 41cm',     species:['광어'],         frame: 4 },
+    { lat: 35.40,  lng: 126.20,  type: 'spot', name: '영광 갈치존',     subtitle: '48건/7일 · 평균 71cm',     species:['갈치'],         frame: 4 },
+    { lat: 34.50,  lng: 126.50,  type: 'spot', name: '진도 참돔 라인',  subtitle: '64건/7일 · 평균 58cm',     species:['참돔'],         frame: 4 },
+    { lat: 34.65,  lng: 127.85,  type: 'spot', name: '여수 갈치 핫스팟', subtitle: '89건/7일 · 평균 82cm',     species:['갈치'],         frame: 4 },
+    { lat: 34.30,  lng: 128.00,  type: 'spot', name: '남해 갈치 코어',  subtitle: '71건/7일 · 야간 활성',     species:['갈치'],         frame: 4 },
+    { lat: 34.90,  lng: 128.50,  type: 'spot', name: '통영 갈치 핫스팟', subtitle: '38건/7일 · 야간 활성',    species:['갈치'],         frame: 4 },
+    { lat: 34.50,  lng: 128.40,  type: 'spot', name: '거제 참돔 코어',  subtitle: '54건/7일 · 평균 62cm',     species:['참돔'],         frame: 4 },
+    { lat: 35.30,  lng: 129.30,  type: 'spot', name: '기장 우럭 라인',  subtitle: '41건/7일 · 평균 36cm',     species:['우럭'],         frame: 4 },
+    { lat: 36.20,  lng: 129.60,  type: 'spot', name: '포항 광어 라인',  subtitle: '32건/7일 · 평균 38cm',     species:['광어'],         frame: 4 },
+    { lat: 38.10,  lng: 128.55,  type: 'spot', name: '동해 광어 핫스팟', subtitle: '24건/7일 · 평균 41cm',    species:['광어'],         frame: 4 },
+    { lat: 33.40,  lng: 126.65,  type: 'spot', name: '제주 동쪽 참돔존', subtitle: '52건/7일 · 시즌 시작',    species:['참돔'],         frame: 4 },
+    { lat: 33.30,  lng: 126.20,  type: 'spot', name: '제주 서쪽 갈치존', subtitle: '88건/7일 · 평균 79cm',    species:['갈치'],         frame: 4 },
+    { lat: 33.95,  lng: 126.30,  type: 'spot', name: '추자도 참돔 라인', subtitle: '36건/7일 · 평균 64cm',    species:['참돔'],         frame: 4 },
+
+    // ============ 이벤트 / 챔피언십 ============
+    { lat: 36.40,  lng: 126.55,  type: 'event', name: '챔피언십 1차전',     subtitle: '5.20 · 광어 다운샷 · 보령',    species:['광어'], frame: 6 },
+    { lat: 34.74,  lng: 127.74,  type: 'event', name: '여수 갈치 페스타',   subtitle: '5.25-26 · 화정항 일대',         species:['갈치'], frame: 6 },
+    { lat: 34.94,  lng: 128.66,  type: 'event', name: '거제 참돔 컵',       subtitle: '6.07 · 장승포항 출발',          species:['참돔'], frame: 6 },
+    { lat: 35.241, lng: 129.225, type: 'event', name: '부산 우럭 토너먼트', subtitle: '6.14 · 기장 대변항',            species:['우럭'], frame: 6 },
+    { lat: 33.219, lng: 126.252, type: 'event', name: '제주 갈치 그랑프리', subtitle: '6.21-22 · 모슬포항',           species:['갈치'], frame: 6 }
+    ];
 
   const iconSpec = {
     port:  { color: '#3182F6', label: 'P' },
