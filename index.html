@@ -2160,6 +2160,20 @@ html,body{
   border-radius:6px; font-weight:700; font-size:11.5px;
   cursor:pointer; letter-spacing:-0.01em;
 }
+
+
+/* ==== v4: 추가 back/close 버튼 ==== */
+.sheet-close{
+  position:absolute; top:16px; left:14px;
+  width:36px; height:36px; border:0;
+  background:#fff; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--ink-1); cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,0.10);
+  z-index:8;
+}
+.sheet-close svg{width:18px; height:18px; fill:none; stroke:currentColor;}
+.detail-sticky-back, .boat-cover-back{cursor:pointer;}
 </style>
 <style>/* required styles */
 
@@ -3138,7 +3152,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <!-- ===== Frame 02: 어종 컬렉션 ===== -->
       <div class="frame" data-i="1">
         <div class="h">
-          <div class="h-l"><div class="h-logo"><svg viewBox="0 0 144.3 36.8" width="100" height="26"><path fill="#2d1478" d="M23.9,21.1v-8.5h-8.4v-3.9h8.4V0h4.1v21.1h-4.1ZM6,20.4c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM6,12.6c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-.9,2-2-.9-2-2-2ZM52.6,21.1V0h4.1v8.7h7v3.9h-7v8.5h-4.1ZM32.5,21.1V4.3h4v5.5h5.6v-5.5h4v16.8s-13.6,0-13.6,0ZM42.1,17.2v-3.4h-5.6v3.4h5.6ZM71.7,36.8l5-4.6,5.1,4.6,2.7-2.9-5.7-5.2v-7.5h9v-3.9h-22.2v3.9h9.1v7.5l-5.7,5.1s2.7,3,2.7,3ZM76.7,13.1c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM76.7,5.3c-1,0-1.9.9-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM110.9,21.1V0h4.1v21.1h-4.1ZM89.7,21.1v-3.9h2.5v-4.6h-2.5v-3.9h16.8v3.9h-2.4v4.6h2.4v3.9h-16.8ZM100,17.2v-4.6h-3.8v4.6h3.8ZM138.2,36.7c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM138.2,28.9c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM140.2,21.1V0h4.1v21.1h-4.1ZM118.4,18l5.7-5.1v-5.8h4.1v5.8l5.7,5.2-2.7,3-5.1-4.6-5,4.6-2.7-3h0Z"></path></svg></div></div>
+          <div class="h-l">
+            <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
+            <div class="h-ttl">어종 컬렉션.</div>
+          </div>
           <div class="h-icons"><div class="h-ico" data-go="10"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></div>
             <div class="h-ico" data-go="11"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1112 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10 21a2 2 0 004 0"></path></svg><div class="h-ico-dot"></div></div>
             <div class="h-avatar" data-go="12"></div>
@@ -3369,6 +3386,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         </div>
         <div class="sheet">
           <div class="sheet-handle"></div>
+          <button class="sheet-close" onclick="navBack()" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"></path></svg></button>
           <div class="sheet-h">
             <div>
               <div class="sheet-title">화정항</div>
@@ -3870,7 +3888,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <div class="body no-pad-x detail-body">
           <!-- Sticky condensed header (always visible during scroll) -->
           <div class="detail-sticky-h">
-            <div class="detail-sticky-back" data-go="6">
+            <div class="detail-sticky-back" onclick="navBack()">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
             </div>
             <div class="detail-sticky-title">
@@ -4202,6 +4220,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
       <!-- ===== Frame 10: 예약 완료 ===== -->
       <div class="frame" data-i="9">
+        <div class="h">
+          <div class="h-l">
+            <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
+            <div class="h-ttl">예약 완료.</div>
+          </div>
+        </div>
         <div class="body">
           <div class="confirm-icon"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"></path></svg></div>
           <div class="confirm-h">예약 완료</div>
@@ -4842,49 +4866,49 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <script>
 const FRAMES = [
   { name:'새로운 소식 · 메인 라벨',
-    body:'<p>앱이 사용자에게 알려야 하는 내용만 자동 라벨로 표시. <b>운영자 손 안 댐</b> — 데이터로 자동 갱신.</p><p>"이번 주는 갈치 시즌" 데이터 카피 + TRENDING hero (스파크라인) + 4 메트릭 라벨 (물때·기상·챔피언십·추천 출조일) + 내 기록 + STREAK.</p>',
+    body:'<p><b>앱이 사용자에게 지금 당장 알려야 할 정보만</b> 자동으로 라벨화하는 허브 화면이다. \'이번 주는 갈치 시즌\', LIVE 조황 영웅 배너, 4가지 의사결정 메트릭(물때·기상·챔피언십·추천 출조일)이 위에서부터 내려온다. <b>쉽게 휩쓸 수 있는 구성</b>으로 초보 낚시꾼도 "지금 나가면 잘 될까?"를 5초 안에 판단하도록 설계했다. 아래로 내려가면 시즌 어종 + 수집 컬렉션 + 트로피 + STREAK 보상이 꼬리물기한다.</p>',
     meta:[{lbl:'TAB',val:'새로운 소식'},{lbl:'PATTERN',val:'Auto-curated label'}] },
   { name:'새로운 소식 · 어종 컬렉션',
-    body:'<p>보상 체계 — 어종 컬렉션 (잠금/해제) · 트로피. 사진 갤러리 X, 데이터 카운트만.</p><p>트래킹 앱 (NRC·스트라바) 패턴: 잡은 어종이 자동으로 컬렉션에 추가. 트로피는 행동 기반 (첫 종일·5마리 클럽·STREAK).</p>',
+    body:'<p>잡은 어종이 자동으로 컬렉션으로 쌓이고, 행동 기반 트로피(첫 종일·5마리 클럽·연속 출조 STREAK)가 달성되는 <b>행동 보상 시스템 화면</b>이다. 사용자가 "오늘 이 어종을 잡으면 컬렉션이 완성되겠네?" 같은 미니 목표를 스스로 세울 수 있게 돕는다. 갓 나온 트로피는 뱃지와 함께 UI 최상단에 떠서 즉시 축하받는 경험을 준다.</p>',
     meta:[{lbl:'TAB',val:'새로운 소식'},{lbl:'REWARDS',val:'컬렉션 + 트로피'}] },
   { name:'새로운 소식 · 트렌딩 어종 상세',
-    body:'<p>홈 라벨 클릭 → 어종 드릴다운. 메트릭 4종 (vs 지난 주·최장·최적 물때·평균 채비) + 7일 차트 + TOP 포인트 3.</p><p>"지도에서 보기" CTA → <b>탐색 탭으로 자연 흐름</b>. 의사결정 → 트랜잭션 funnel의 시작점.</p>',
+    body:'<p>홈 라벨의 어종을 탭하면 <b>그 어종만 상세히 드릴다운</b>되는 화면. \'지난 주 대비 월동 어종 순위 변화\' 메트릭 4종 + 7일 차트 + 상위 3명 포인트 랭킹을 스택처럼 보여준다. 마지막 "지도에서 보기" CTA를 누르면 탐색 탭 지도로 자연스럽게 점프해서, 사용자가 "그럼 어디서 잡지?" 다음 질문에 바로 답할 수 있게 한다.</p>',
     meta:[{lbl:'TAB',val:'새로운 소식'},{lbl:'FLOW',val:'새로운 소식 → 탐색'}] },
   { name:'탐색 · 풀스크린 지도',
-    body:'<p>지도 위에 의사결정 도구를 쌓는 핵심 화면. 풀스크린 라이트 모드 지도 + 어종 클러스터 마커.</p><p>상단 통합 검색 (어종+지역+시기) + 어종 칩 + 시기 timeline 슬라이더 (월·물때 끌어보기). 무엇을·언제·어디서 잡을지를 한 화면에서.</p>',
+    body:'<p><b>지도 위에 의사결정 도구들을 레이어처럼 쌓은 풀스크린 지도</b>. 라이트 모드 지도 + 항구 단위 마커 + 실시간 CCTV + 핫스팟 + 이벤트가 동시에 보인다. 어종 칩과 레이어 토글로 마커를 필터링하고, 통합 검색바로 항구·어종·조건을 한 번에 찾을 수 있다. 터치 한 번으로 "이 항구 괜찮나?"에 답하는 신뢰도 높은 정보판이다.</p>',
     meta:[{lbl:'TAB',val:'탐색'},{lbl:'TYPE',val:'Fullscreen map'}] },
   { name:'탐색 · 포인트 선택',
-    body:'<p>지도 마커 클릭 시 bottom sheet 열림. 포인트 정보 + 어종 best 3 + <b>다음 최적 출조일</b> (D-day · 물때 · 기상 · 선박 운항 수).</p><p>"출조 플랜 만들기" CTA → 플랜 빌더로.</p>',
+    body:'<p>지도의 항구 마커를 클릭하면 <b>bottom sheet로 항구의 모든 정보가 한눈에 펼쳐진다</b>. 항구 기본정보 + 지금 잘 잡히는 어종 best 3 + 다음 최적 출조일(남은 날짜·물때·기상·운항 선박 유무)을 한 줄씩 보여준다. 하단에는 그 항구 소속 선박 리스트가 스크롤 가능하게 배치되어, 바로 예약으로 넘어가는 동선을 막지 않는다.</p>',
     meta:[{lbl:'TAB',val:'탐색'},{lbl:'PATTERN',val:'Bottom sheet'}] },
   { name:'탐색 · 출조 플랜 빌더',
-    body:'<p>4단계 progress (어종·선박·예약자·결제). 1·2 완료 → 3·4는 출조 탭에서.</p><p><b>데이터 기반 추천 채비</b> — 최근 142건 갈치 등록 데이터 분석으로 자동 추천. NRC의 "Plan a run" 패턴.</p>',
+    body:'<p><b>4단계 진행률 표시(어종·선박·예약자·결제)</b>로 사용자가 "지금 여기까지 왔구나" 한눈에 파악한다. 1, 2단계는 완료했으므로 3, 4는 다음 \'출조\' 탭에서 진행하라는 신호다. 하단의 "추천 채비" 카드는 최근 142건의 갈치 낚시 데이터를 자동 분석해 "이 어종이면 요 정도의 채비가 표준이야" 확신을 준다. 머뭇거리는 초보자에게 강력한 가이드 역할.</p>',
     meta:[{lbl:'TAB',val:'탐색'},{lbl:'PATTERN',val:'Plan builder'}] },
   { name:'출조 · 메인',
-    body:'<p>의사결정 → 트랜잭션 본업 탭. <b>다음 출조 D-day 큰 카운터</b> (검정 hero) + 진행률 ring (이번 달 5회 골 / 3회 완료) + 최근 출조 timeline.</p><p>트래킹 앱의 "next workout" 패턴.</p>',
+    body:'<p>앱의 핵심 트랜잭션 탭. <b>다음 출조까지 남은 시간을 큰 검정 히어로로</b> 띄우고, 이번 달 목표(5회 출조) 대비 진행률 링을 그 옆에 붙여서 게임화 모멘텀을 유지한다. 핫딜 슬라이더 → 필터 적용된 선박 카드들 → 챔피언십 기획전 → 어종별 큐레이션으로, 스크롤하면서 자연스럽게 다음 출조를 발견하도록 유도한다.</p>',
     meta:[{lbl:'TAB',val:'출조'},{lbl:'FOCUS',val:'D-day tracking'}] },
   { name:'출조 · 선박 상세',
-    body:'<p>큰 cover 이미지 (+ 실시간·대회 태그) + 선박명·지역·어종 칩 + <b>옵션 카드</b> (선택 시 블루 보더) + 환불 보증 카드.</p><p>풀폭 블루 CTA "예약하기 · 110,000원" 하단 고정.</p>',
+    body:'<p><b>선박 예약의 모든 정보가 한 화면에</b>. 큰 커버 이미지로 시작해서 선박명·지역·어종 칩이 이어지고, AI 요약 카드가 "이 배의 한줄 평"을 준다. 5개 탭(컨디션·선장·스펙·조황·후기)이 sticky로 붙어있어 스크롤해도 탭 접근이 쉽다. 캘린더 + 6셀 컨디션 인디케이터 + 환불 보증 설명으로, 선박 신뢰도는 물론 "이 날 예약해도 환불 안 되겠지?" 같은 불안감도 해소한다. 마지막 풀폭 파란 버튼 "예약하기 · 110,000원"은 명확한 행동 신호.</p>',
     meta:[{lbl:'TAB',val:'출조'},{lbl:'PATTERN',val:'Detail + sticky CTA'}] },
   { name:'출조 · 결제',
-    body:'<p>예약 정보 요약 + 결제 수단 (<b>머니 1순위 박스</b> · 6% 적립 · 자동 충전) + 쿠폰 + 합계.</p><p>최종 결제 22px 블루 큰 숫자. 풀폭 블루 CTA.</p>',
+    body:'<p><b>예약 정보를 요약한 영수증 스타일 화면</b>. 예약 정보 + 결제 수단 + 쿠폰 입력을 차례로 보여주고, 최종 합계 가격을 22px 파란 큰 숫자로 강조한다. 풀폭 파란 CTA "결제하기"로 "더 이상 선택지가 없고 이게 마지막이다" 명확한 종료 시그널을 준다.</p>',
     meta:[{lbl:'TAB',val:'출조'},{lbl:'METHOD',val:'카드 결제'}] },
   { name:'출조 · 예약 완료',
-    body:'<p>큰 체크 아이콘 + 예약 카드 + <b>D-day 카운터</b> (검정 hero) + 데이터 추천 채비.</p><p>"알림톡 보기 · 홈으로" 2버튼. 트래킹 앱의 "Trip booked" 패턴.</p>',
+    body:'<p><b>큰 체크 아이콘과 함께 "예약 완료!" 순간을 축하</b>한다. 예약 카드로 정보를 재확인하고, 검정 히어로 D-day 카운터로 출조까지의 기대감을 유지한다. "추천 채비" 카드가 한 번 더 노출되어, 사용자가 이미 예약하고도 "아, 채비를 뭘 챙겨야지?"라는 다음 액션을 준비하게 한다. 하단 "알림톡 보기 · 홈으로" 두 버튼으로 사용자가 선택할 수 있게 배려.</p>',
     meta:[{lbl:'TAB',val:'출조'},{lbl:'PATTERN',val:'Confirmation'}] },
   { name:'검색 (통합)',
-    body:'<p>어종 + 지역 + 시기 + 선박을 한번에 검색. 최근 검색·인기 검색 랭킹·시기로 찾기 칩.</p><p>홈/탐색/출조 모든 헤더 검색 아이콘에서 진입.</p>',
+    body:'<p><b>어종 + 지역 + 시기 + 선박을 한 번에 검색하는 통합 검색</b>. 별도 화면 없이 최근 검색 이력, 인기 검색 랭킹, "시기로 찾기" 칩들이 입력 필드 아래 떠서 터치 3회면 원하는 출조를 찾는다. 초보자도 "갈치 낚싯배 언제 가?" 프리텍스트로 바로 필터링할 수 있는 진입점.</p>',
     meta:[{lbl:'TAB',val:'전역'},{lbl:'PATTERN',val:'Unified search'}] },
   { name:'알림함',
-    body:'<p>예약 확정·D-day 알림·트렌딩 어종·STREAK 보상·챔피언십 등 모든 푸시·인앱 알림.</p><p>알림 클릭 시 해당 화면(예약 상세·어종 상세)으로 자연 점프.</p>',
+    body:'<p><b>푸시·인앱 알림을 모두 한곳에</b> 모아놓은 알림함. 예약 확정, D-day 리마인더, 트렌딩 어종, STREAK 보상, 챔피언십 알림 등 모든 종류가 타임라인으로 쌓인다. 각 알림을 탭하면 해당 화면으로 자연스럽게 점프하므로, 사용자는 "아, 내 트로피 업데이트됐네!"라는 알림을 받고 바로 마이 페이지로 가서 자랑할 수 있다.</p>',
     meta:[{lbl:'TAB',val:'전역'},{lbl:'PATTERN',val:'Inbox'}] },
   { name:'마이',
-    body:'<p>프로필 + 메뉴 (예약 내역·찜·어종 컬렉션·트로피·설정).</p><p>아바타 클릭 시 진입.</p>',
+    body:'<p><b>사용자의 모든 정보와 설정의 허브</b>. 프로필 사진·닉네임과 함께 회원 등급 카드가 중앙 시선을 잡는다. 등급 카드를 클릭하면 상세 페이지로 이동하고, 아래 메뉴(예약 내역·찜·어종 컬렉션·트로피·설정)로 각 섹션으로 깊게 들어간다. 사용자의 "나는 몇 급 낚시꾼일까?" 호기심을 자극하는 입구.</p>',
     meta:[{lbl:'TAB',val:'전역'},{lbl:'PATTERN',val:'Profile + Menu'}] },
-  { name:'예약 상세 (D-day)', body:'<p>예약한 출조의 D-day 카운터 + 예약 정보 + 환불 정책 + 출조 가이드.</p><p>출조 메인의 다음 출조 카드 클릭 시 진입.</p>', meta:[{lbl:'TAB',val:'출조'},{lbl:'PATTERN',val:'Trip detail'}] },
-  { name:'환불 정책 + 약관', body:'<p>환불 보증제 상세 설명 (D-3 100% / D-1 50% / D-day 0%) + 풍랑 자동 환불.</p><p>자주 묻는 질문 + 사업자정보 + 약관 링크. 마이 메뉴에서 진입.</p>', meta:[{lbl:'TAB',val:'마이'},{lbl:'TYPE',val:'Trust page'}] },
-  { name:'1:1 문의 (CS)', body:'<p>카테고리 칩 (예약·결제·환불·기타) + 문의 입력 + FAQ 5-10개 + SLA 안내.</p><p>마이 메뉴에서 진입. 빠른 답변 30분 보증.</p>', meta:[{lbl:'TAB',val:'마이'},{lbl:'TYPE',val:'Customer support'}] },
-  { name:'마이 · 설정 / 프로필 편집', body:'<p>닉네임·관심 어종 편집 + 카카오/네이버/Apple 계정 연동 + 알림 설정 + 결제 수단 + 약관·데이터 다운로드 + 로그아웃·탈퇴.</p>', meta:[{lbl:'TAB',val:'마이'},{lbl:'TYPE',val:'Profile + Settings'}] },
-  { name:'마이 · 회원 등급', body:'<p>5단계 등급 (새내기·어부·명조사·챔피언·레전드) + 현재 등급 progress + 등급별 혜택 (우선예약·적립률·전용쿠폰·신뢰도 가중치) + 챔피언 자동시드.</p>', meta:[{lbl:'TAB',val:'마이'},{lbl:'TYPE',val:'Membership grade'}] }
+  { name:'예약 상세 (D-day)', body:'<p><b>예약한 출조의 상세 상태 화면</b>. 검정 히어로 D-day 카운터로 "언제 가는지" 한눈에 보고, 예약 정보(날짜·시간·선박·인원·가격) + 환불 정책(언제까지 몇 % 환불 가능) + 출조 가이드(짐 챙기기·준비물·도착 시간)를 차례로 본다. 출조 전날 밤 혹은 당일 아침 다시 들어와서 "아, 뭘 챙겨야지?" 다시 확인하기에 완벽한 체크리스트 역할.</p>', meta:[{lbl:'TAB',val:'출조'},{lbl:'PATTERN',val:'Trip detail'}] },
+  { name:'환불 정책 + 약관', body:'<p><b>환불 정책과 약관을 투명하게</b> 공개하는 신뢰도 화면. 환불 보증제(D-3 100% / D-1 50% / D-day 0%)를 표로 명확히 하고, 풍랑으로 운항 취소 시 자동 환불된다는 약속을 강조한다. FAQ와 사업자정보, 약관 링크까지 차례로 배치해서, 사용자가 "이 앱 믿고 예약해도 될까?"에 대한 모든 답변을 여기서 찾을 수 있게 한다.</p>', meta:[{lbl:'TAB',val:'마이'},{lbl:'TYPE',val:'Trust page'}] },
+  { name:'1:1 문의 (CS)', body:'<p><b>1:1 고객 문의를 카테고리로 분류해서</b> 가장 빠른 답변을 보장한다. 카테고리 칩(예약·결제·환불·기타)으로 문제를 선택하고, 문의 내용을 입력한 후 관련 FAQ를 아래서 보여줘서 "혹시 이미 나왔던 질문은 아닐까?" 재입력을 줄인다. 하단 "SLA 안내(빠른 답변 30분 보증)"는 초초한 사용자에게 심리적 안정감을 주는 약속.</p>', meta:[{lbl:'TAB',val:'마이'},{lbl:'TYPE',val:'Customer support'}] },
+  { name:'마이 · 설정 / 프로필 편집', body:'<p><b>모든 개인 설정을 한 곳에서</b> 관리하는 화면. 닉네임·한 줄 소개·관심 어종 편집 → SNS 계정 연동(카카오·네이버·Apple·휴대폰) → 알림 설정 → 결제 수단 → 약관·데이터 다운로드 → 로그아웃·탈퇴 순서로, 민감도 낮은 것부터 높은 것까지 점진적으로 배치했다. 사용자가 "계정 설정"을 찾기 위해 헤맬 필요 없이, 프로필에서 한 번의 스와이프로 모든 것을 조정할 수 있다.</p>', meta:[{lbl:'TAB',val:'마이'},{lbl:'TYPE',val:'Profile + Settings'}] },
+  { name:'마이 · 회원 등급', body:'<p><b>5단계 등급 시스템(새내기→어부→명조사→챔피언→레전드)</b>의 진행 상황을 한눈에. 현재 등급의 progress bar와 다음 등급까지의 거리를 보여주고, 등급별 혜택(우선예약 12h 앞서기·적립률 +6%·전용쿠폰·신뢰도 가중치)을 명시한다. 챔피언 등급 이상이면 자동으로 대회 시드를 받는다는 보상까지 보여줘서, 사용자가 "다음 달까지 한 등급만 더 올라가야지" 하는 자발적 목표 세우기를 유도한다.</p>', meta:[{lbl:'TAB',val:'마이'},{lbl:'TYPE',val:'Membership grade'}] }
 ];
 
 let currentFrame = 0;
