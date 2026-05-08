@@ -1791,15 +1791,16 @@ html,body{
 /* heart는 우상단 단독 */
 .thumb-heart{ z-index:3; }
 
-/* ==== v4: FAB 위치 — bottom-card 위쪽으로 안전하게 ==== */
+/* ==== v4: FAB 위치 — 화면 상단 (search overlay 바로 아래, 카드 영역과 분리) ==== */
 .map-fab-col{
   position:absolute !important; right:14px !important;
-  top:auto !important; bottom:312px !important; /* card top edge ~298px + 14px gap */
+  top:200px !important; bottom:auto !important;
   display:flex; flex-direction:column; gap:10px; z-index:8 !important;
 }
 .map-fab{
-  width:46px; height:46px; box-shadow:0 6px 16px rgba(0,0,0,0.18) !important;
+  width:42px; height:42px; box-shadow:0 4px 12px rgba(0,0,0,0.15) !important;
 }
+.map-fab svg{ width:18px !important; height:18px !important; }
 
 /* ==== v4: 컴팩트 단일 행 레이어 필터 ==== */
 .map-layers{

@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>어바웃피싱 — 전체 18 프레임 (v4 layout)</title>
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>어바웃피싱 — 18 프레임</title>
 <style>
-
 /* ===== 어바웃피싱 v3 — Renewal CSS ============================================
    Single inline stylesheet. Preserves every class name and JS contract from v2.
    System: 8px grid · Pretendard hierarchy · 14px card radii · neutral surfaces
@@ -1792,15 +1789,16 @@ html,body{
 /* heart는 우상단 단독 */
 .thumb-heart{ z-index:3; }
 
-/* ==== v4: FAB 위치 — bottom-card 위쪽으로 안전하게 ==== */
+/* ==== v4: FAB 위치 — 화면 상단 (search overlay 바로 아래, 카드 영역과 분리) ==== */
 .map-fab-col{
   position:absolute !important; right:14px !important;
-  top:auto !important; bottom:312px !important; /* card top edge ~298px + 14px gap */
+  top:200px !important; bottom:auto !important;
   display:flex; flex-direction:column; gap:10px; z-index:8 !important;
 }
 .map-fab{
-  width:46px; height:46px; box-shadow:0 6px 16px rgba(0,0,0,0.18) !important;
+  width:42px; height:42px; box-shadow:0 4px 12px rgba(0,0,0,0.15) !important;
 }
+.map-fab svg{ width:18px !important; height:18px !important; }
 
 /* ==== v4: 컴팩트 단일 행 레이어 필터 ==== */
 .map-layers{
@@ -2898,11 +2896,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .marker-cluster span {
 	line-height: 30px;
 	}
-
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
-       font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-       color:#191919; letter-spacing:-0.018em; }
+body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh; font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif; color:#191919; letter-spacing:-0.018em; }
 .layout-h { max-width:1320px; margin:0 auto 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 .layout-h h1 { font-size:24px; font-weight:800; letter-spacing:-0.04em; color:#191919; }
 .layout-h .sub { color:#666; font-size:13px; margin-top:4px; letter-spacing:-0.01em; }
@@ -2921,22 +2916,9 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
 .notch, .statusbar { display:none !important; }
 .phone-wrap #leafletMap { background:linear-gradient(135deg,#E8F0FF 0%,#D8E5F8 100%) !important; position:relative; }
 .phone-wrap #leafletMap::after { content:'지도 — Leaflet (인터랙티브)'; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:#5688A8; font-weight:700; font-size:11px; letter-spacing:-0.01em; pointer-events:none; }
-
-</style>
-</head>
-<body>
-<div class="layout-h">
-  <div>
-    <h1>어바웃피싱 — 전체 18 프레임</h1>
-    <div class="sub">3탭 · 새로운 소식 · 탐색 · 출조 — v4 design (renewal)</div>
-  </div>
-  <a href="./" class="back-btn">← 프로토타입으로 돌아가기</a>
-</div>
-<div class="grid">
-
-<div class="cell">
-  <div class="cell-h"><span class="num">01</span><span class="name">새로운 소식 · 메인 라벨</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="0">
+</style></head><body>
+<div class="layout-h"><div><h1>어바웃피싱 — 전체 18 프레임</h1><div class="sub">3탭 · v4 design</div></div><a href="./" class="back-btn">← 프로토타입으로</a></div>
+<div class="grid"><div class="cell"><div class="cell-h"><span class="num">01</span><span class="name">새로운 소식 · 메인 라벨</span></div><div class="phone-wrap"><div class="frame active" data-i="0">
         <div class="h">
           <div class="h-l"><div class="h-logo"><svg viewBox="0 0 144.3 36.8" width="100" height="26"><path fill="#2d1478" d="M23.9,21.1v-8.5h-8.4v-3.9h8.4V0h4.1v21.1h-4.1ZM6,20.4c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM6,12.6c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-.9,2-2-.9-2-2-2ZM52.6,21.1V0h4.1v8.7h7v3.9h-7v8.5h-4.1ZM32.5,21.1V4.3h4v5.5h5.6v-5.5h4v16.8s-13.6,0-13.6,0ZM42.1,17.2v-3.4h-5.6v3.4h5.6ZM71.7,36.8l5-4.6,5.1,4.6,2.7-2.9-5.7-5.2v-7.5h9v-3.9h-22.2v3.9h9.1v7.5l-5.7,5.1s2.7,3,2.7,3ZM76.7,13.1c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM76.7,5.3c-1,0-1.9.9-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM110.9,21.1V0h4.1v21.1h-4.1ZM89.7,21.1v-3.9h2.5v-4.6h-2.5v-3.9h16.8v3.9h-2.4v4.6h2.4v3.9h-16.8ZM100,17.2v-4.6h-3.8v4.6h3.8ZM138.2,36.7c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM138.2,28.9c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM140.2,21.1V0h4.1v21.1h-4.1ZM118.4,18l5.7-5.1v-5.8h4.1v5.8l5.7,5.2-2.7,3-5.1-4.6-5,4.6-2.7-3h0Z"></path></svg></div></div>
           <div class="h-icons"><div class="h-ico" data-go="10"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></div><div class="h-ico" data-go="11"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1112 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10 21a2 2 0 004 0"></path></svg><div class="h-ico-dot"></div></div><div class="h-avatar" data-go="12"></div>
@@ -3116,12 +3098,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab on"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">02</span><span class="name">새로운 소식 · 어종 컬렉션</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="1">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">02</span><span class="name">새로운 소식 · 어종 컬렉션</span></div><div class="phone-wrap"><div class="frame active" data-i="1">
         <div class="h">
           <div class="h-l"><div class="h-logo"><svg viewBox="0 0 144.3 36.8" width="100" height="26"><path fill="#2d1478" d="M23.9,21.1v-8.5h-8.4v-3.9h8.4V0h4.1v21.1h-4.1ZM6,20.4c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM6,12.6c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-.9,2-2-.9-2-2-2ZM52.6,21.1V0h4.1v8.7h7v3.9h-7v8.5h-4.1ZM32.5,21.1V4.3h4v5.5h5.6v-5.5h4v16.8s-13.6,0-13.6,0ZM42.1,17.2v-3.4h-5.6v3.4h5.6ZM71.7,36.8l5-4.6,5.1,4.6,2.7-2.9-5.7-5.2v-7.5h9v-3.9h-22.2v3.9h9.1v7.5l-5.7,5.1s2.7,3,2.7,3ZM76.7,13.1c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM76.7,5.3c-1,0-1.9.9-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM110.9,21.1V0h4.1v21.1h-4.1ZM89.7,21.1v-3.9h2.5v-4.6h-2.5v-3.9h16.8v3.9h-2.4v4.6h2.4v3.9h-16.8ZM100,17.2v-4.6h-3.8v4.6h3.8ZM138.2,36.7c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM138.2,28.9c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM140.2,21.1V0h4.1v21.1h-4.1ZM118.4,18l5.7-5.1v-5.8h4.1v5.8l5.7,5.2-2.7,3-5.1-4.6-5,4.6-2.7-3h0Z"></path></svg></div></div>
           <div class="h-icons"><div class="h-ico" data-go="10"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></div>
@@ -3183,12 +3161,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab on"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">03</span><span class="name">새로운 소식 · 트렌딩 어종 상세</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="2">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">03</span><span class="name">새로운 소식 · 트렌딩 어종 상세</span></div><div class="phone-wrap"><div class="frame active" data-i="2">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -3273,12 +3247,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab on"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">04</span><span class="name">탐색 · 풀스크린 지도</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="3">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">04</span><span class="name">탐색 · 풀스크린 지도</span></div><div class="phone-wrap"><div class="frame active" data-i="3">
         <div id="leafletMap"></div>
         <div class="search-overlay">
           <div class="search-bar" data-go="10">
@@ -3335,12 +3305,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
         </div>
 
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab"><span class="tab-name">새로운 소식</span></div><div class="tab on"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">05</span><span class="name">탐색 · 포인트 선택</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="4">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">05</span><span class="name">탐색 · 포인트 선택</span></div><div class="phone-wrap"><div class="frame active" data-i="4">
         <div class="map-canvas">
           <div class="map-grid-overlay"></div>
           <svg class="map-coast" viewBox="0 0 393 700" preserveAspectRatio="xMidYMid slice">
@@ -3524,12 +3490,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab"><span class="tab-name">새로운 소식</span></div><div class="tab on"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">06</span><span class="name">탐색 · 출조 플랜 빌더</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="5">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">06</span><span class="name">탐색 · 출조 플랜 빌더</span></div><div class="phone-wrap"><div class="frame active" data-i="5">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -3586,12 +3548,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </button>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab"><span class="tab-name">새로운 소식</span></div><div class="tab on"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">07</span><span class="name">출조 · 메인</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="6">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">07</span><span class="name">출조 · 메인</span></div><div class="phone-wrap"><div class="frame active" data-i="6">
         <div class="h">
           <div class="h-l"><div class="h-logo"><svg viewBox="0 0 144.3 36.8" width="100" height="26"><path fill="#2d1478" d="M23.9,21.1v-8.5h-8.4v-3.9h8.4V0h4.1v21.1h-4.1ZM6,20.4c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM6,12.6c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-.9,2-2-.9-2-2-2ZM52.6,21.1V0h4.1v8.7h7v3.9h-7v8.5h-4.1ZM32.5,21.1V4.3h4v5.5h5.6v-5.5h4v16.8s-13.6,0-13.6,0ZM42.1,17.2v-3.4h-5.6v3.4h5.6ZM71.7,36.8l5-4.6,5.1,4.6,2.7-2.9-5.7-5.2v-7.5h9v-3.9h-22.2v3.9h9.1v7.5l-5.7,5.1s2.7,3,2.7,3ZM76.7,13.1c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM76.7,5.3c-1,0-1.9.9-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM110.9,21.1V0h4.1v21.1h-4.1ZM89.7,21.1v-3.9h2.5v-4.6h-2.5v-3.9h16.8v3.9h-2.4v4.6h2.4v3.9h-16.8ZM100,17.2v-4.6h-3.8v4.6h3.8ZM138.2,36.7c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM138.2,28.9c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM140.2,21.1V0h4.1v21.1h-4.1ZM118.4,18l5.7-5.1v-5.8h4.1v5.8l5.7,5.2-2.7,3-5.1-4.6-5,4.6-2.7-3h0Z"></path></svg></div></div>
           <div class="h-icons">
@@ -3858,12 +3816,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab on"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">08</span><span class="name">출조 · 선박 상세</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="7">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">08</span><span class="name">출조 · 선박 상세</span></div><div class="phone-wrap"><div class="frame active" data-i="7">
         <div class="body no-pad-x detail-body">
           <!-- Sticky condensed header (always visible during scroll) -->
           <div class="detail-sticky-h">
@@ -4129,12 +4083,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
             <button class="cta-bar-btn" data-go="8">예약하기 →</button>
           </div>
         </div>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">09</span><span class="name">출조 · 결제</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="8">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">09</span><span class="name">출조 · 결제</span></div><div class="phone-wrap"><div class="frame active" data-i="8">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -4197,12 +4147,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </button>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab on"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">10</span><span class="name">출조 · 예약 완료</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="9">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">10</span><span class="name">출조 · 예약 완료</span></div><div class="phone-wrap"><div class="frame active" data-i="9">
         <div class="body">
           <div class="confirm-icon"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"></path></svg></div>
           <div class="confirm-h">예약 완료</div>
@@ -4236,12 +4182,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab on"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">11</span><span class="name">검색 (통합)</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="10">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">11</span><span class="name">검색 (통합)</span></div><div class="phone-wrap"><div class="frame active" data-i="10">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -4280,12 +4222,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab on"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">12</span><span class="name">알림함</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="11">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">12</span><span class="name">알림함</span></div><div class="phone-wrap"><div class="frame active" data-i="11">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -4338,12 +4276,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab on"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">13</span><span class="name">마이</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="12">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">13</span><span class="name">마이</span></div><div class="phone-wrap"><div class="frame active" data-i="12">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -4432,12 +4366,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           <div class="logout-row" data-go="16">로그아웃 · 계정 관리</div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab on"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">14</span><span class="name">예약 상세 (D-day)</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="13">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">14</span><span class="name">예약 상세 (D-day)</span></div><div class="phone-wrap"><div class="frame active" data-i="13">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -4484,12 +4414,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab on"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">15</span><span class="name">환불 정책 + 약관</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="14">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">15</span><span class="name">환불 정책 + 약관</span></div><div class="phone-wrap"><div class="frame active" data-i="14">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -4527,12 +4453,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">16</span><span class="name">1:1 문의 (CS)</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="15">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">16</span><span class="name">1:1 문의 (CS)</span></div><div class="phone-wrap"><div class="frame active" data-i="15">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -4563,12 +4485,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
           </div>
         </div>
         <div class="tabbar-bg"></div><nav class="tabbar"><div class="tab"><span class="tab-name">새로운 소식</span></div><div class="tab"><span class="tab-name">탐색</span></div><div class="tab"><span class="tab-name">출조</span></div></nav>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">17</span><span class="name">마이 · 설정 / 프로필 편집</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="16">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">17</span><span class="name">마이 · 설정 / 프로필 편집</span></div><div class="phone-wrap"><div class="frame active" data-i="16">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -4719,12 +4637,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
             어바웃피싱 v2.0.5 · 사업자등록번호 999-99-99999
           </div>
         </div>
-      </div></div>
-</div>
-
-<div class="cell">
-  <div class="cell-h"><span class="num">18</span><span class="name">마이 · 회원 등급</span></div>
-  <div class="phone-wrap"><div class="frame active" data-i="17">
+      </div></div></div>
+<div class="cell"><div class="cell-h"><span class="num">18</span><span class="name">마이 · 회원 등급</span></div><div class="phone-wrap"><div class="frame active" data-i="17">
         <div class="h">
           <div class="h-l">
             <div class="h-back"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg></div>
@@ -4840,10 +4754,6 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh;
             </div>
           </div>
         </div>
-      </div></div>
-</div>
-</div>
-<script>
-window.showFrame=function(){};window.navTab=function(){};window.navBack=function(){};window.navTo=function(){};
-</script>
+      </div></div></div></div>
+<script>window.showFrame=function(){};window.navTab=function(){};window.navBack=function(){};window.navTo=function(){};</script>
 </body></html>
