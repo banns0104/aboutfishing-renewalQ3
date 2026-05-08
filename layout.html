@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>어바웃피싱 — 18 프레임</title>
-<style>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>어바웃피싱 — 18 프레임</title><style>
 /* ===== 어바웃피싱 v3 — Renewal CSS ============================================
    Single inline stylesheet. Preserves every class name and JS contract from v2.
    System: 8px grid · Pretendard hierarchy · 14px card radii · neutral surfaces
@@ -1487,7 +1484,7 @@ html,body{
 
 
 /* ===== Detail-page polish ===== */
-.detail-body{padding-bottom:140px;}
+.detail-body{padding-bottom:180px;}
 .detail-pad{padding:0 20px;}
 .boat-cover{height:320px; background:linear-gradient(135deg,#A4C8E1 0%,#3F6F9A 100%); position:relative;}
 .boat-cover-back{box-shadow:0 4px 12px rgba(0,0,0,0.10);}
@@ -2167,6 +2164,19 @@ html,body{
 }
 .sheet-close svg{width:18px; height:18px; fill:none; stroke:currentColor;}
 .detail-sticky-back, .boat-cover-back{cursor:pointer;}
+
+
+/* ==== v4: sheet 헤더 인라인 back 버튼 ==== */
+.sheet-h{ display:flex; align-items:flex-start; gap:8px; }
+.sheet-h-back{
+  width:32px; height:32px; flex-shrink:0; margin-top:-4px;
+  border:0; background:transparent; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--ink-1); border-radius:50%;
+}
+.sheet-h-back:active{ background:var(--bg-soft); }
+.sheet-h-back svg{ width:18px; height:18px; fill:none; stroke:currentColor; }
+.sheet-close{ display:none !important; }
 
 /* required styles */
 
@@ -2906,10 +2916,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	line-height: 30px;
 	}
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh; font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif; color:#191919; letter-spacing:-0.018em; }
+body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh; font-family:'Pretendard Variable','Pretendard',sans-serif; color:#191919; letter-spacing:-0.018em; }
 .layout-h { max-width:1320px; margin:0 auto 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 .layout-h h1 { font-size:24px; font-weight:800; letter-spacing:-0.04em; color:#191919; }
-.layout-h .sub { color:#666; font-size:13px; margin-top:4px; letter-spacing:-0.01em; }
+.layout-h .sub { color:#666; font-size:13px; margin-top:4px; }
 .back-btn { padding:10px 16px; background:#191919; color:#fff; border:0; border-radius:9999px; font-weight:700; cursor:pointer; font-size:13px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
 .back-btn:hover { background:#000; }
 .grid { max-width:1320px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:24px; }
@@ -2919,15 +2929,13 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh; font-family
 .cell-h .name { font-size:13px; font-weight:700; color:#191919; letter-spacing:-0.02em; }
 .phone-wrap { width:100%; aspect-ratio:9/19; background:#fff; border-radius:32px; box-shadow:0 6px 20px rgba(0,0,0,0.10); overflow:hidden; position:relative; }
 .phone-wrap .frame.active { position:absolute !important; inset:0 !important; display:flex !important; flex-direction:column !important; background:#fff; }
-.phone-wrap .frame .body { flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:90px !important; }
+.phone-wrap .frame .body { flex:1; min-height:0; overflow-y:auto; padding-bottom:90px !important; }
 .phone-wrap .frame:not([data-i="0"]):not([data-i="3"]):not([data-i="6"]) .body { padding-bottom:24px !important; }
 .phone-wrap .frame .tabbar, .phone-wrap .frame .tabbar-bg { position:absolute !important; left:0 !important; right:0 !important; bottom:0 !important; }
 .notch, .statusbar { display:none !important; }
 .phone-wrap #leafletMap { background:linear-gradient(135deg,#E8F0FF 0%,#D8E5F8 100%) !important; position:relative; }
-.phone-wrap #leafletMap::after { content:'지도 — Leaflet (인터랙티브)'; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:#5688A8; font-weight:700; font-size:11px; letter-spacing:-0.01em; pointer-events:none; }
-</style></head><body>
-<div class="layout-h"><div><h1>어바웃피싱 — 전체 18 프레임</h1><div class="sub">3탭 · v4 design (renewal)</div></div><a href="./" class="back-btn">← 프로토타입으로</a></div>
-<div class="grid"><div class="cell"><div class="cell-h"><span class="num">01</span><span class="name">새로운 소식 · 메인 라벨</span></div><div class="phone-wrap"><div class="frame active" data-i="0">
+.phone-wrap #leafletMap::after { content:'지도 — Leaflet'; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:#5688A8; font-weight:700; font-size:11px; pointer-events:none; }
+</style></head><body><div class="layout-h"><div><h1>어바웃피싱 — 전체 18 프레임</h1><div class="sub">3탭 · v4 design</div></div><a href="./" class="back-btn">← 프로토타입으로</a></div><div class="grid"><div class="cell"><div class="cell-h"><span class="num">01</span><span class="name">새로운 소식 · 메인 라벨</span></div><div class="phone-wrap"><div class="frame active" data-i="0">
         <div class="h">
           <div class="h-l"><div class="h-logo"><svg viewBox="0 0 144.3 36.8" width="100" height="26"><path fill="#2d1478" d="M23.9,21.1v-8.5h-8.4v-3.9h8.4V0h4.1v21.1h-4.1ZM6,20.4c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM6,12.6c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-.9,2-2-.9-2-2-2ZM52.6,21.1V0h4.1v8.7h7v3.9h-7v8.5h-4.1ZM32.5,21.1V4.3h4v5.5h5.6v-5.5h4v16.8s-13.6,0-13.6,0ZM42.1,17.2v-3.4h-5.6v3.4h5.6ZM71.7,36.8l5-4.6,5.1,4.6,2.7-2.9-5.7-5.2v-7.5h9v-3.9h-22.2v3.9h9.1v7.5l-5.7,5.1s2.7,3,2.7,3ZM76.7,13.1c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM76.7,5.3c-1,0-1.9.9-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM110.9,21.1V0h4.1v21.1h-4.1ZM89.7,21.1v-3.9h2.5v-4.6h-2.5v-3.9h16.8v3.9h-2.4v4.6h2.4v3.9h-16.8ZM100,17.2v-4.6h-3.8v4.6h3.8ZM138.2,36.7c-3.3,0-6-2.6-6-5.9s2.7-6,6-6,6,2.7,6,6-2.7,5.9-6,5.9ZM138.2,28.9c-1,0-1.9,1-1.9,2s.9,2,1.9,2,2-1,2-2-.9-2-2-2ZM140.2,21.1V0h4.1v21.1h-4.1ZM118.4,18l5.7-5.1v-5.8h4.1v5.8l5.7,5.2-2.7,3-5.1-4.6-5,4.6-2.7-3h0Z"></path></svg></div></div>
           <div class="h-icons"><div class="h-ico" data-go="10"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></div><div class="h-ico" data-go="11"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1112 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10 21a2 2 0 004 0"></path></svg><div class="h-ico-dot"></div></div><div class="h-avatar" data-go="12"></div>
@@ -3338,8 +3346,8 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh; font-family
         </div>
         <div class="sheet">
           <div class="sheet-handle"></div>
-          <button class="sheet-close" onclick="navBack()" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"></path></svg></button>
           <div class="sheet-h">
+            <button class="sheet-h-back" onclick="navBack()" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"></path></svg></button>
             <div>
               <div class="sheet-title">화정항</div>
               <div class="sheet-loc">전남 여수 · 6척 운항 · 수심 32-58m · 142건 등록</div>
@@ -3556,7 +3564,7 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh; font-family
           </div>
         </div>
         <div class="cta-fixed">
-          <button class="cta-btn" data-go="7">출조 탭으로 → 예약 진행
+          <button class="cta-btn" data-go="7">예약 진행
             <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
           </button>
         </div>
@@ -4773,6 +4781,4 @@ body { background:#E8E8E8; padding:24px 16px 60px; min-height:100vh; font-family
             </div>
           </div>
         </div>
-      </div></div></div></div>
-<script>window.showFrame=function(){};window.navTab=function(){};window.navBack=function(){};window.navTo=function(){};</script>
-</body></html>
+      </div></div></div></div><script>window.showFrame=function(){};window.navTab=function(){};window.navBack=function(){};window.navTo=function(){};</script></body></html>
